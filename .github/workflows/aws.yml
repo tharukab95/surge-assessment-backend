@@ -6,7 +6,7 @@ on:
 env:
   AWS_REGION: us-east-1
   ECS_CLUSTER: demo-app-cluster
-  CONTAINER_NAME: app
+  CONTAINER_NAME: demo-app-task
   ECS_SERVICE: surge-demo-app-service
   ECS_TD: .github/workflows/td.json
 
