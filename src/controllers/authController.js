@@ -5,13 +5,12 @@ const jwt = require("jsonwebtoken");
 const register = async (req, res) => {
   const { username, email, password } = req.body;
 
-  console.log("password: ", password);
   if ((!username, !email || !password))
     return res
       .status(400)
       .json({ message: "Required field/fields values missing." });
 
-  const duplicate = await User.findOne({ username: username }).exec();
+  const duplicate = await User.findOne({ username: username });
   if (duplicate) return res.sendStatus(409);
 
   try {
@@ -36,7 +35,7 @@ const login = async (req, res) => {
       .status(400)
       .json({ message: "Username and password are required." });
 
-  const foundUser = await User.findOne({ username: username }).exec();
+  const foundUser = await User.findOne({ username: username });
   if (!foundUser) return res.sendStatus(401); //Unauthorized
 
   const match = await bcrypt.compare(password, foundUser.password);
