@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 const authRoutes = require("./src/routes/authRoutes");
 const laureatesRoutes = require("./src/routes/laureatesRoutes");
@@ -18,6 +20,15 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json());
+
+app.use(helmet());
+
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  limit: 300,
+});
+
+app.use(limiter);
 
 mongoose.connect(
   "mongodb+srv://tharukabandara95:Dragon102824@cluster0.fybweur.mongodb.net/assessment",
