@@ -2,11 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-// const db = require("./models");
+
 const authRoutes = require("./src/routes/authRoutes");
 const laureatesRoutes = require("./src/routes/laureatesRoutes");
 const commentsRoutes = require("./src/routes/commentsRoutes");
-// const mongodbConnect = require("./config/db");
+
 require("dotenv").config();
 
 const app = express();
@@ -36,15 +36,6 @@ db.once("open", () => {
 
 app.use(express.urlencoded({ extended: true }));
 
-// db.sequelize
-//   .sync({ force: true })
-//   .then(() => {
-//     console.log("Synced database.");
-//   })
-//   .catch((err) => {
-//     console.log("Failed to sync database: " + err.message);
-//   });
-
 app.use(express.json());
 app.use(cookieParser());
 
@@ -55,28 +46,6 @@ app.use(function (req, res, next) {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
-});
-
-const CONTACTS = [
-  {
-    name: "Foo Bar",
-    email: "foobar@test.com",
-    cell: "555-123-4567",
-  },
-  {
-    name: "Biz Baz",
-    email: "bizbaz@test.com",
-    cell: "555-123-5678",
-  },
-  {
-    name: "Bing Bang",
-    email: "bingbang@test.com",
-    cell: "555-123-6789",
-  },
-];
-
-app.get("/contacts", (req, res) => {
-  res.json({ contacts: CONTACTS });
 });
 
 app.use("/auth", authRoutes);

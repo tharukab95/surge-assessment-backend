@@ -1,16 +1,9 @@
-const authService = require("../services/authService");
-const User = require("../models/user-model");
+const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
   const { username, email, password } = req.body;
-  //   try {
-  //     const user = await authService.register(username, email, password);
-  //     res.json({ message: "registration successful", user });
-  //   } catch (error) {
-  //     res.status(401).json({ error: error.message });
-  //   }
 
   console.log("password: ", password);
   if ((!username, !email || !password))
@@ -35,14 +28,6 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  //   const { email, password } = req.body;
-  //   try {
-  //     const token = await authService.login(email, password);
-  //     res.json({ token });
-  //   } catch (error) {
-  //     res.status(401).json({ error: error.message });
-  //   }
-
   const cookies = req.cookies;
 
   const { username, password } = req.body;
@@ -64,7 +49,7 @@ const login = async (req, res) => {
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "2h" }
     );
     const newRefreshToken = jwt.sign(
       { username: foundUser.username },
@@ -81,25 +66,17 @@ const login = async (req, res) => {
       const foundToken = await User.findOne({ refreshToken }).exec();
 
       if (!foundToken) {
-        console.log("attempted refresh token reuse at login!");
+        // console.log("attempted refresh token reuse at login!");
         newRefreshTokenArray = [];
       }
 
-      res.clearCookie("jwt", {
-        // httpOnly: true,
-        // sameSite: "none",
-        // secure: true,
-      });
+      res.clearCookie("jwt", {});
     }
 
     foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
     const result = await foundUser.save();
-    console.log(result);
 
     res.cookie("jwt", newRefreshToken, {
-      // httpOnly: true,
-      // secure: true,
-      // sameSite: "none",
       maxAge: 24 * 60 * 60 * 1000,
     });
 
@@ -115,7 +92,6 @@ const login = async (req, res) => {
 
 const handleRefreshToken = async (req, res) => {
   const cookies = req.cookies;
-  console.log("jwt: :", cookies.jwt);
 
   if (!cookies?.jwt) return res.sendStatus(401);
   const refreshToken = cookies.jwt;
@@ -153,7 +129,6 @@ const handleRefreshToken = async (req, res) => {
         console.log("expired refresh token");
         foundUser.refreshToken = [...newRefreshTokenArray];
         const result = await foundUser.save();
-        console.log(result);
       }
       if (err || foundUser.username !== decoded.username)
         return res.sendStatus(403);

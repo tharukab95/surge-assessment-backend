@@ -1,4 +1,4 @@
-const User = require("../models/user-model");
+const User = require("../models/userModel");
 const Comment = require("../models/commentModel");
 
 const getComments = async (req, res) => {
