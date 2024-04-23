@@ -1,5 +1,5 @@
 {
-  "taskDefinitionArn": "arn:aws:ecs:us-east-1:471112935963:task-definition/demo-app-task:2",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:471112935963:task-definition/demo-app-task:9",
   "containerDefinitions": [
     {
       "name": "demo-app-task",
@@ -23,7 +23,7 @@
   "family": "demo-app-task",
   "executionRoleArn": "arn:aws:iam::471112935963:role/demo-app-task-execution-role",
   "networkMode": "awsvpc",
-  "revision": 2,
+  "revision": 9,
   "volumes": [],
   "status": "ACTIVE",
   "requiresAttributes": [
@@ -45,7 +45,7 @@
   "requiresCompatibilities": ["FARGATE"],
   "cpu": "256",
   "memory": "512",
-  "registeredAt": "2024-04-22T12:45:20.296Z",
+  "registeredAt": "2024-04-23T02:56:02.755Z",
   "registeredBy": "arn:aws:iam::471112935963:user/surge-user",
   "tags": []
 }
