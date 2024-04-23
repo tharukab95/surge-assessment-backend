@@ -1,7 +1,4 @@
 locals {
-#   bucket_name = "surge-tf-demo"
-#   table_name  = "surgeTfDemo"
-
   ecr_repo_name = "demo-app-ecr-repo"
 
   demo_app_cluster_name        = "demo-app-cluster"

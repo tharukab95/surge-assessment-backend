@@ -1,14 +1,6 @@
 terraform {
   required_version = "~> 1.8"
 
-#   backend "s3" {
-#     bucket         = "surge-tf-demo"
-#     key            = "tf-infra/terraform.tfstate"
-#     region         = "us-east-1"
-#     dynamodb_table = "surgeTfDemo"
-#     encrypt        = true
-#   }
-
   required_providers {
     aws = {
       source  = "hashicorp/aws"
