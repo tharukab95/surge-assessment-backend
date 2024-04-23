@@ -5,4 +5,6 @@ const { verifyJWT } = require("../middlewares/verifyJwt.js");
 
 router.get("/laureates", verifyJWT, laureatesController.getLaureates);
 
+router.get("/laureate/:laureateId", laureatesController.getLaureate);
+
 module.exports = router;

@@ -20,3 +20,18 @@ const getLaureates = async (req, res) => {
 module.exports = {
   getLaureates,
 };
+
+const getLaureate = async (req, res) => {
+  const laureateId = req.params.laureateId;
+
+  const { data } = await axios.get(
+    `http://api.nobelprize.org/2.0/laureate/${laureateId}`
+  );
+
+  res.json(data);
+};
+
+module.exports = {
+  getLaureates,
+  getLaureate,
+};

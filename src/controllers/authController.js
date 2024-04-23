@@ -64,7 +64,7 @@ const login = async (req, res) => {
         },
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "15m" }
+      { expiresIn: "1h" }
     );
     const newRefreshToken = jwt.sign(
       { username: foundUser.username },
@@ -103,7 +103,11 @@ const login = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    res.json({ username, email: foundUser.email, accessToken });
+    res.json({
+      username,
+      email: foundUser.email,
+      accessToken,
+    });
   } else {
     res.sendStatus(401);
   }
@@ -111,6 +115,7 @@ const login = async (req, res) => {
 
 const handleRefreshToken = async (req, res) => {
   const cookies = req.cookies;
+  console.log("jwt: :", cookies.jwt);
 
   if (!cookies?.jwt) return res.sendStatus(401);
   const refreshToken = cookies.jwt;
@@ -160,7 +165,7 @@ const handleRefreshToken = async (req, res) => {
           },
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "10s" }
+        { expiresIn: "1m" }
       );
 
       const newRefreshToken = jwt.sign(
